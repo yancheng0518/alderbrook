@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7ef">
+  <meta name="description" content="自由环看溪畔林居，沿溪桥抵达小屋，在木亭里点亮一盏油灯。">
+  <title>溪畔林居 · 林间手记</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}</script>
+</head>
+<body>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+      <symbol id="i-mute" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zm13 1 5 5m0-5-5 5"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.35 2.35 0 0 1 4.6.6c0 1.9-2.3 2.1-2.3 4m0 3h.01"/></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"/></symbol>
+      <symbol id="i-collapse" viewBox="0 0 24 24"><path d="M4 9h5V4m6 0v5h5m0 6h-5v5m-6 0v-5H4"/></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 .8 6.6M4 4v6h6"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1.7V4m0 16v2.3M1.7 12H4m16 0h2.3M4.6 4.6l1.7 1.7m11.4 11.4 1.7 1.7m0-14.8-1.7 1.7m-11.4 11.4-1.7 1.7"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.2A8.4 8.4 0 0 1 9.8 4.5a8.5 8.5 0 1 0 9.7 9.7Z"/></symbol>
+      <symbol id="i-dawn" viewBox="0 0 24 24"><path d="M2 17h20M5 21h14M7 14a5 5 0 0 1 10 0M12 2v4M3.5 7.5l2.7 2m14.3-2-2.7 2"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h4l1.7-2.5h6.6L17 7h4v12H3z"/><circle cx="12" cy="12.7" r="3.4"/></symbol>
+      <symbol id="i-lights" viewBox="0 0 24 24"><path d="M8 16c0-2-3-3.5-3-7a7 7 0 0 1 14 0c0 3.5-3 5-3 7zM9 19h6m-5 3h4"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m2 11 10-8 10 8M5 9v11h14V9M10 20v-7h4v7m2.5-13V4h2v4"/></symbol>
+      <symbol id="i-lantern" viewBox="0 0 24 24"><path d="M8 8V6a4 4 0 0 1 8 0v2M6 9h12l-1.5 9h-9zM8 18l-1 3h10l-1-3M5 8h14"/><path d="M12 16c-2.6 0-1-3.5.2-4.4.2 1.7 2.3 4.4-.2 4.4Z"/></symbol>
+      <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 5v5"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13V6a1.5 1.5 0 0 1 3 0v6-8a1.5 1.5 0 0 1 3 0v8-6a1.5 1.5 0 0 1 3 0v6-3a1.5 1.5 0 0 1 3 0v5c0 5-3 7-7 7-2 0-4-1-5-3l-4-5a1.5 1.5 0 0 1 2-2z"/></symbol>
+    </defs>
+  </svg>
+  <header class="masthead">
+    <div class="identity"><img src="./icon.svg" alt="" width="46" height="46"><div><strong>林间手记</strong><span>WOODLAND JOURNAL</span></div></div>
+    <div class="header-actions">
+      <button type="button" id="sound" class="text-btn" aria-label="环境音" aria-pressed="false"><svg><use href="#i-mute"/></svg><span>环境音</span><i class="sound-state"></i></button>
+      <i class="divider"></i><button type="button" id="help" class="text-btn"><svg><use href="#i-help"/></svg><span>操作指南</span></button>
+    </div>
+  </header>
+  <main>
+    <section id="stage" class="stage" aria-label="溪畔林居 3D 场景">
+      <div id="world" tabindex="0" role="region" aria-label="三维观察区，拖动或按方向键旋转，滚轮或加减键缩放"></div>
+      <div class="scene-shade"></div>
+      <div class="stage-top">
+        <div class="live"><i></i><span id="render-status">正在载入</span></div>
+        <div class="time-group">
+          <button id="time-button" type="button" class="glass time-btn" aria-expanded="false" aria-controls="times"><svg><use id="time-icon" href="#i-sun"/></svg><span id="time-label">午后暖阳</span><svg class="arrow"><use href="#i-chevron"/></svg></button>
+          <div id="times" class="time-menu" hidden aria-label="选择场景时段">
+            <button type="button" data-time="morning" aria-pressed="false"><svg><use href="#i-dawn"/></svg>晨间薄雾</button>
+            <button type="button" data-time="afternoon" aria-pressed="true"><svg><use href="#i-sun"/></svg>午后暖阳</button>
+            <button type="button" data-time="evening" aria-pressed="false"><svg><use href="#i-moon"/></svg>蓝调时刻</button>
+          </div>
+        </div>
+      </div>
+      <div class="scene-title"><div class="english"><span></span>Alderbrook Cottage</div><h1>溪畔林居</h1></div>
+      <div class="stage-tools"><button type="button" class="glass icon-btn" id="reset" title="复位当前镜头" aria-label="复位当前镜头"><svg><use href="#i-reset"/></svg></button><button type="button" class="glass icon-btn" id="fullscreen" title="全屏查看" aria-label="全屏查看"><svg><use href="#i-expand"/></svg></button></div>
+      <div id="notice" class="notice" role="status" hidden></div>
+    </section>
+    <section class="console" aria-label="场景控制">
+      <div class="view-controls">
+        <div class="section-heading"><h2><svg><use href="#i-camera"/></svg>取景视角</h2><span>VIEWPOINTS</span></div>
+        <div class="view-grid" role="group" aria-label="取景视角">
+          <button type="button" class="view-card selected" data-view="overview" aria-pressed="true"><span class="thumb"><img src="./frames/overview.webp" alt=""><i><svg><use href="#i-check"/></svg></i></span><span class="view-name">林居全景</span></button>
+          <button type="button" class="view-card" data-view="cottage" aria-pressed="false"><span class="thumb"><img src="./frames/cottage.webp" alt=""><i><svg><use href="#i-check"/></svg></i></span><span class="view-name">小屋门廊</span></button>
+          <button type="button" class="view-card" data-view="pavilion" aria-pressed="false"><span class="thumb"><img src="./frames/pavilion.webp" alt=""><i><svg><use href="#i-check"/></svg></i></span><span class="view-name">亭下茶席</span></button>
+          <button type="button" class="view-card" data-view="creek" aria-pressed="false"><span class="thumb"><img src="./frames/creek.webp" alt=""><i><svg><use href="#i-check"/></svg></i></span><span class="view-name">溪上木桥</span></button>
+        </div>
+      </div>
+      <div class="light-controls">
+        <div class="section-heading"><h2><svg><use href="#i-lights"/></svg>灯光控制</h2><span>LIGHTING</span></div>
+        <div class="light-grid">
+          <button type="button" class="light-row" role="switch" aria-checked="true" aria-label="房屋灯光" data-light="house"><svg><use href="#i-home"/></svg><span>房屋灯光</span><i class="switch"></i></button>
+          <button type="button" class="light-row" role="switch" aria-checked="true" aria-label="桌上油灯" data-light="oil"><svg><use href="#i-lantern"/></svg><span>桌上油灯</span><i class="switch"></i></button>
+        </div>
+      </div>
+    </section>
+    <footer><svg><use href="#i-mouse"/></svg><span class="desktop-hint">拖动环绕</span><span class="touch-hint">单指环绕</span><i></i><span class="desktop-hint">滚轮缩放</span><span class="touch-hint">双指缩放</span></footer>
+  </main>
+  <dialog id="guide"><div class="guide-head"><h2>操作指南</h2><button type="button" class="icon-btn" id="close-guide" aria-label="关闭操作指南"><svg><use href="#i-x"/></svg></button></div>
+    <dl><div><dt>环看场景</dt><dd>按住并拖动，或单指滑动</dd></div><div><dt>拉近与拉远</dt><dd>滚动鼠标滚轮，或双指捏合</dd></div><div><dt>键盘取景</dt><dd>聚焦画面后，方向键旋转，＋／－缩放，Home 复位</dd></div><div><dt>切换时段</dt><dd>点击画面右上角的时段名称</dd></div></dl>
+  </dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
